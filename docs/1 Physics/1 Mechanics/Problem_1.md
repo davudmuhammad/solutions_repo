@@ -124,16 +124,6 @@ A key computational task is to visualize the projectile range as a function of l
 - Incorporate drag force for realistic modeling.
 - Generate range vs. angle plots to determine optimal launch parameters.
 
-# Deliverables
-
-1. **Markdown Document**: A document with Python scripts or Jupyter Notebook implementing the simulations.
-2. **Detailed Family of Solutions**: An extended explanation of how different initial conditions lead to varying motion profiles.
-3. **Graphical Representations**:
-   - Plots of range vs. projection angle.
-   - Visualizations demonstrating parameter effects on motion.
-4. **Discussion on Model Limitations**:
-   - Assumptions such as idealized air resistance and terrain homogeneity.
-   - Extensions to incorporate wind effects and variable gravity.
 
 # Practical Applications
 
