@@ -172,7 +172,97 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
-<p>just testing</p>
+<h1 id="theoretical-foundation">Theoretical Foundation</h1>
+<h2 id="1-governing-equations-of-motion">1. Governing Equations of Motion</h2>
+<h3 id="newtons-second-law">Newton's Second Law</h3>
+<p>The motion of a system is fundamentally governed by Newton’s Second Law:</p>
+<div class="arithmatex">\[ F = ma \]</div>
+<p>where:
+- <span class="arithmatex">\( F \)</span> is the force acting on a body,
+- <span class="arithmatex">\( m \)</span> is the mass of the body,
+- <span class="arithmatex">\( a \)</span> is the acceleration <span class="arithmatex">\( a = \frac{d^2x}{dt^2} \)</span>.</p>
+<p>For a conservative system with a restoring force <span class="arithmatex">\( F(x) \)</span>, we assume a linear force:</p>
+<div class="arithmatex">\[ F = -kx \]</div>
+<p>where <span class="arithmatex">\( k \)</span> is a proportionality constant (such as the stiffness of a spring). Applying Newton’s Second Law:</p>
+<div class="arithmatex">\[ m \frac{d^2x}{dt^2} = -kx \]</div>
+<p>Rearranging:</p>
+<div class="arithmatex">\[ \frac{d^2x}{dt^2} + \frac{k}{m} x = 0 \]</div>
+<p>Defining <span class="arithmatex">\( \omega^2 = \frac{k}{m} \)</span>, we get the standard form of the simple harmonic oscillator equation:</p>
+<div class="arithmatex">\[ \frac{d^2x}{dt^2} + \omega^2 x = 0 \]</div>
+<p>where <span class="arithmatex">\( \omega \)</span> is the natural angular frequency.</p>
+<h2 id="2-general-solution">2. General Solution</h2>
+<p>This is a second-order homogeneous differential equation with characteristic equation:</p>
+<div class="arithmatex">\[ r^2 + \omega^2 = 0 \]</div>
+<p>Solving for <span class="arithmatex">\( r \)</span>:</p>
+<div class="arithmatex">\[ r = \pm i \omega \]</div>
+<p>The general solution is:</p>
+<div class="arithmatex">\[ x(t) = A \cos(\omega t) + B \sin(\omega t) \]</div>
+<p>where <span class="arithmatex">\( A \)</span> and <span class="arithmatex">\( B \)</span> are constants determined by initial conditions.</p>
+<h2 id="3-effect-of-initial-conditions">3. Effect of Initial Conditions</h2>
+<p>Let the initial conditions be:</p>
+<div class="arithmatex">\[ x(0) = x_0, \quad \dot{x}(0) = v_0 \]</div>
+<p>Using <span class="arithmatex">\( x(0) = x_0 \)</span>:</p>
+<div class="arithmatex">\[ x_0 = A \cos(0) + B \sin(0) = A \]</div>
+<p>Thus, <span class="arithmatex">\( A = x_0 \)</span>.</p>
+<p>Taking the derivative:</p>
+<div class="arithmatex">\[ \dot{x}(t) = -A\omega \sin(\omega t) + B\omega \cos(\omega t) \]</div>
+<p>Applying <span class="arithmatex">\( \dot{x}(0) = v_0 \)</span>:</p>
+<div class="arithmatex">\[ v_0 = -x_0 \omega \sin(0) + B\omega \cos(0) = B\omega \]</div>
+<p>Thus, <span class="arithmatex">\( B = \frac{v_0}{\omega} \)</span>.</p>
+<h2 id="4-final-expression-for-motion">4. Final Expression for Motion</h2>
+<p>Substituting <span class="arithmatex">\( A \)</span> and <span class="arithmatex">\( B \)</span> into the general solution:</p>
+<div class="arithmatex">\[ x(t) = x_0 \cos(\omega t) + \frac{v_0}{\omega} \sin(\omega t) \]</div>
+<h2 id="5-family-of-solutions">5. Family of Solutions</h2>
+<p>The solution depends on initial conditions:
+- If <span class="arithmatex">\( x_0 &gt; 0 \)</span> and <span class="arithmatex">\( v_0 = 0 \)</span>, motion starts from rest at <span class="arithmatex">\( x_0 \)</span>.
+- If <span class="arithmatex">\( x_0 = 0 \)</span> and <span class="arithmatex">\( v_0 &gt; 0 \)</span>, motion starts from equilibrium with an initial velocity.
+- Different values of <span class="arithmatex">\( x_0 \)</span> and <span class="arithmatex">\( v_0 \)</span> lead to different phase shifts in oscillatory motion.</p>
+<p>This derivation establishes the fundamental equation of motion and demonstrates how varying initial conditions yield a family of sinusoidal solutions.</p>
+<h1 id="simulating-particle-motion">Simulating Particle Motion</h1>
+<h2 id="1-motion-in-a-uniform-magnetic-field">1. Motion in a Uniform Magnetic Field</h2>
+<p>A charged particle of charge <span class="arithmatex">\( q \)</span> moving with velocity <span class="arithmatex">\( \mathbf{v} \)</span> in a uniform magnetic field <span class="arithmatex">\( \mathbf{B} \)</span> experiences a Lorentz force:</p>
+<div class="arithmatex">\[ \mathbf{F} = q (\mathbf{v} \times \mathbf{B}) \]</div>
+<p>This results in circular motion with radius:</p>
+<div class="arithmatex">\[ r = \frac{m v}{q B} \]</div>
+<p>and angular frequency:</p>
+<div class="arithmatex">\[ \omega_c = \frac{qB}{m} \]</div>
+<p>The trajectory is a helix if there is an initial velocity component parallel to <span class="arithmatex">\( \mathbf{B} \)</span>.</p>
+<h2 id="2-motion-in-combined-electric-and-magnetic-fields">2. Motion in Combined Electric and Magnetic Fields</h2>
+<p>When both electric <span class="arithmatex">\( \mathbf{E} \)</span> and magnetic <span class="arithmatex">\( \mathbf{B} \)</span> fields are present, the Lorentz force equation becomes:</p>
+<div class="arithmatex">\[ m \frac{d \mathbf{v}}{dt} = q (\mathbf{E} + \mathbf{v} \times \mathbf{B}) \]</div>
+<p>The motion depends on the relative orientations of <span class="arithmatex">\( \mathbf{E} \)</span> and <span class="arithmatex">\( \mathbf{B} \)</span>, leading to drift motion.</p>
+<h2 id="3-motion-in-crossed-electric-and-magnetic-fields">3. Motion in Crossed Electric and Magnetic Fields</h2>
+<p>For perpendicular <span class="arithmatex">\( \mathbf{E} \)</span> and <span class="arithmatex">\( \mathbf{B} \)</span> fields, the particle undergoes <strong>E×B drift</strong> with velocity:</p>
+<div class="arithmatex">\[ \mathbf{v}_d = \frac{\mathbf{E} \times \mathbf{B}}{B^2} \]</div>
+<p>which is independent of the charge and mass of the particle.</p>
+<p>Numerical simulations can visualize these trajectories by solving the differential equations governing the motion using computational methods such as the Runge-Kutta method.</p>
+<h1 id="implementation">Implementation</h1>
+<h2 id="1-developing-a-computational-tool">1. Developing a Computational Tool</h2>
+<p>A Python script or Jupyter notebook can be used to implement simulations for projectile motion. This involves solving the equations of motion numerically using methods like Euler's method or Runge-Kutta integration.</p>
+<h2 id="2-visualization-of-range-vs-angle">2. Visualization of Range vs. Angle</h2>
+<p>A key computational task is to visualize the projectile range as a function of launch angle:
+- Solve the motion equations for different launch angles.
+- Incorporate drag force for realistic modeling.
+- Generate range vs. angle plots to determine optimal launch parameters.</p>
+<h1 id="deliverables">Deliverables</h1>
+<ol>
+<li><strong>Markdown Document</strong>: A document with Python scripts or Jupyter Notebook implementing the simulations.</li>
+<li><strong>Detailed Family of Solutions</strong>: An extended explanation of how different initial conditions lead to varying motion profiles.</li>
+<li><strong>Graphical Representations</strong>:</li>
+<li>Plots of range vs. projection angle.</li>
+<li>Visualizations demonstrating parameter effects on motion.</li>
+<li><strong>Discussion on Model Limitations</strong>:</li>
+<li>Assumptions such as idealized air resistance and terrain homogeneity.</li>
+<li>Extensions to incorporate wind effects and variable gravity.</li>
+</ol>
+<h1 id="practical-applications">Practical Applications</h1>
+<h2 id="1-sports-science-and-ballistics">1. Sports Science and Ballistics</h2>
+<p>Understanding projectile motion helps optimize sports strategies, such as improving basketball shooting angles or golf swings. Similarly, ballistics relies on precise trajectory calculations for targeting.</p>
+<h2 id="2-spacecraft-and-orbital-dynamics">2. Spacecraft and Orbital Dynamics</h2>
+<p>Satellite launches and interplanetary missions require accurate motion predictions under gravitational fields and atmospheric drag.</p>
+<h2 id="3-engineering-and-defense">3. Engineering and Defense</h2>
+<p>Projectile motion equations are used in designing missile guidance systems, artillery range calculations, and even civil engineering applications like structural impact analysis.</p>
+<p>This task provides a deep understanding of motion equations while showcasing their applicability in real-world scenarios.</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
