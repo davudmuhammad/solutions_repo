@@ -138,3 +138,68 @@ Projectile motion equations are used in designing missile guidance systems, arti
 
 This task provides a deep understanding of motion equations while showcasing their applicability in real-world scenarios.
 
+import numpy as np
+from scipy.integrate import odeint
+import matplotlib.pyplot as plt
+
+# Constants
+G = 6.67430e-11  # Gravitational constant, m^3 kg^-1 s^-2
+M_EARTH = 5.972e24  # Mass of Earth, kg
+R_EARTH = 6371e3  # Radius of Earth, m
+C_D = 2.2  # Drag coefficient (assumed)
+A = 20  # Cross-sectional area of the spacecraft, m^2 (assumed)
+rho_0 = 1.225  # Sea level atmospheric density, kg/m^3
+H = 8500  # Scale height for atmosphere, m
+
+# Initial conditions
+r0 = R_EARTH + 400e3  # Initial altitude of 400 km
+v0 = 7.8e3  # Initial velocity, m/s (assumed)
+angle = np.radians(45)  # Launch angle, degrees converted to radians
+x0 = r0 * np.cos(angle)
+y0 = r0 * np.sin(angle)
+vx0 = v0 * np.cos(angle)
+vy0 = v0 * np.sin(angle)
+initial_conditions = [x0, y0, vx0, vy0]
+
+# Equations of motion
+def equations_of_motion(y, t):
+    x, y, vx, vy = y
+    r = np.sqrt(x**2 + y**2)
+    
+    # Gravitational force
+    F_grav = -G * M_EARTH / r**3
+    ax_grav = F_grav * x
+    ay_grav = F_grav * y
+    
+    # Atmospheric drag
+    altitude = r - R_EARTH
+    rho = rho_0 * np.exp(-altitude / H)
+    v = np.sqrt(vx**2 + vy**2)
+    F_drag = 0.5 * C_D * A * rho * v**2
+    ax_drag = -F_drag * vx / (v * initial_conditions[0])
+    ay_drag = -F_drag * vy / (v * initial_conditions[0])
+    
+    # Total acceleration
+    ax = ax_grav + ax_drag
+    ay = ay_grav + ay_drag
+    
+    return [vx, vy, ax, ay]
+
+# Time span for the simulation
+t = np.linspace(0, 5400, 1000)  # Simulate for 1.5 hours
+
+# Solve the equations of motion
+solution = odeint(equations_of_motion, initial_conditions, t)
+
+# Extract the results
+x_sol = solution[:, 0]
+y_sol = solution[:, 1]
+
+# Plot the trajectory
+plt.plot(x_sol, y_sol)
+plt.xlabel('x (m)')
+plt.ylabel('y (m)')
+plt.title('Spacecraft Trajectory')
+plt.axis('equal')
+plt.grid(True)
+plt.show()
