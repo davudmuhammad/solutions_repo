@@ -137,3 +137,79 @@ Satellite launches and interplanetary missions require accurate motion predictio
 Projectile motion equations are used in designing missile guidance systems, artillery range calculations, and even civil engineering applications like structural impact analysis.
 
 This task provides a deep understanding of motion equations while showcasing their applicability in real-world scenarios.
+import numpy as np
+from scipy.integrate import solve_ivp
+import matplotlib.pyplot as plt
+
+# Constants
+G = 6.67430e-11  # Gravitational constant (m^3 kg^-1 s^-2)
+M_EARTH = 5.972e24  # Mass of Earth (kg)
+R_EARTH = 6371e3  # Radius of Earth (m)
+C_D = 2.2  # Drag coefficient
+A = 10  # Cross-sectional area of spacecraft (m^2)
+m = 500  # Mass of spacecraft (kg)
+rho_0 = 1.225  # Sea level atmospheric density (kg/m^3)
+H = 8500  # Atmospheric scale height (m)
+
+# Initial conditions
+altitude = 400e3  # 400 km above Earth
+r0 = R_EARTH + altitude  # Initial orbital radius
+v0 = np.sqrt(G * M_EARTH / r0)  # Circular orbit velocity
+angle = np.radians(45)  # Initial angle
+x0, y0 = r0 * np.cos(angle), r0 * np.sin(angle)
+vx0, vy0 = -v0 * np.sin(angle), v0 * np.cos(angle)
+initial_conditions = [x0, y0, vx0, vy0]
+
+# Equations of Motion
+def equations_of_motion(t, state):
+    x, y, vx, vy = state
+    r = np.sqrt(x**2 + y**2)
+
+    # Gravitational Acceleration
+    ax_grav = -G * M_EARTH * x / r**3
+    ay_grav = -G * M_EARTH * y / r**3
+
+    # Atmospheric Drag
+    altitude = r - R_EARTH
+    if altitude > 0:
+        rho = rho_0 * np.exp(-altitude / H)  # Density model
+    else:
+        rho = 0  # No atmosphere below the surface
+
+    v = np.sqrt(vx**2 + vy**2)
+    if v > 0:
+        F_drag = 0.5 * C_D * A * rho * v**2
+        ax_drag = -F_drag * vx / (v * m)
+        ay_drag = -F_drag * vy / (v * m)
+    else:
+        ax_drag, ay_drag = 0, 0
+
+    # Total acceleration
+    ax = ax_grav + ax_drag
+    ay = ay_grav + ay_drag
+
+    return [vx, vy, ax, ay]
+
+# Time Span
+t_span = (0, 2 * 3600)  # Simulate for 2 hours
+t_eval = np.linspace(0, 2 * 3600, 1000)
+
+# Solve the system
+solution = solve_ivp(equations_of_motion, t_span, initial_conditions, t_eval=t_eval, method='RK45')
+
+# Extract solutions
+x_sol, y_sol = solution.y[0], solution.y[1]
+
+# Plot Orbit
+plt.figure(figsize=(8, 8))
+plt.plot(x_sol, y_sol, label="Satellite Trajectory")
+circle = plt.Circle((0, 0), R_EARTH, color='b', alpha=0.3, label="Earth")
+plt.gca().add_patch(circle)
+plt.xlabel('x (m)')
+plt.ylabel('y (m)')
+plt.title('Satellite Orbit Simulation')
+plt.axis('equal')
+plt.grid(True)
+plt.legend()
+plt.show()
+
