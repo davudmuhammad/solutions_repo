@@ -6,13 +6,13 @@
 <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../../img/favicon.ico" rel="shortcut icon"/>
-<title>Problem 2 - Physics and Mathematics</title>
+<title>Problem 2# Forced Damped Pendulum: Theoretical and Dynamic Analysis - Physics and Mathematics</title>
 <link href="../../../css/theme.css" rel="stylesheet"/>
 <link href="../../../css/theme_extra.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" rel="stylesheet"/>
 <script>
         // Current page data
-        var mkdocs_page_name = "Problem 2";
+        var mkdocs_page_name = "Problem 2# Forced Damped Pendulum: Theoretical and Dynamic Analysis";
         var mkdocs_page_input_path = "1 Physics/1 Mechanics/Problem_2.md";
         var mkdocs_page_url = null;
       </script>
@@ -48,8 +48,28 @@
 <ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../Problem_1/">Problem 1</a>
 </li>
-<li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 2</a>
+<li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 2# Forced Damped Pendulum: Theoretical and Dynamic Analysis</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#1-theoretical-foundation">1. Theoretical Foundation</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#governing-equation">Governing Equation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#small-angle-approximation">Small-Angle Approximation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#resonance-condition">Resonance Condition</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#2-analysis-of-dynamics">2. Analysis of Dynamics</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#parameter-effects">Parameter Effects:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#numerical-simulation-results">Numerical Simulation Results</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#next-steps-optional-visualizations">Next Steps (Optional Visualizations)</a>
+</li>
 </ul>
 </li>
 </ul>
@@ -163,7 +183,7 @@
 <li><a aria-label="Docs" class="icon icon-home" href="../../.."></a></li>
 <li class="breadcrumb-item">1 Physics</li>
 <li class="breadcrumb-item">1 Mechanics</li>
-<li class="breadcrumb-item active">Problem 2</li>
+<li class="breadcrumb-item active">Problem 2# Forced Damped Pendulum: Theoretical and Dynamic Analysis</li>
 <li class="wy-breadcrumbs-aside">
 </li>
 </ul>
@@ -171,7 +191,92 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-2">Problem 2</h1>
+<h1 id="problem-2-forced-damped-pendulum-theoretical-and-dynamic-analysis">Problem 2# <strong>Forced Damped Pendulum: Theoretical and Dynamic Analysis</strong></h1>
+<h2 id="1-theoretical-foundation"><strong>1. Theoretical Foundation</strong></h2>
+<h3 id="governing-equation"><strong>Governing Equation</strong></h3>
+<p>The motion of a forced damped pendulum is described by:</p>
+<div class="arithmatex">\[
+\frac{d^2\theta}{dt^2} + \gamma \frac{d\theta}{dt} + \omega_0^2 \sin\theta = A \cos(\omega t)
+\]</div>
+<p>Where:
+- <span class="arithmatex">\( \theta(t) \)</span>: Angular displacement<br/>
+- <span class="arithmatex">\( \gamma \)</span>: Damping coefficient<br/>
+- <span class="arithmatex">\( \omega_0 \)</span>: Natural frequency <span class="arithmatex">\( = \sqrt{\frac{g}{L}} \)</span><br/>
+- <span class="arithmatex">\( A \)</span>: Driving amplitude<br/>
+- <span class="arithmatex">\( \omega \)</span>: Driving frequency  </p>
+<hr/>
+<h3 id="small-angle-approximation"><strong>Small-Angle Approximation</strong></h3>
+<p>Assuming <span class="arithmatex">\( \theta \ll 1 \)</span>, we use <span class="arithmatex">\( \sin\theta \approx \theta \)</span>:</p>
+<div class="arithmatex">\[
+\frac{d^2\theta}{dt^2} + \gamma \frac{d\theta}{dt} + \omega_0^2 \theta = A \cos(\omega t)
+\]</div>
+<h4 id="solution"><strong>Solution:</strong></h4>
+<div class="arithmatex">\[
+\theta(t) = B \cos(\omega t - \delta)
+\]</div>
+<p>Where:
+- <span class="arithmatex">\( B = \frac{A}{\sqrt{(\omega_0^2 - \omega^2)^2 + (\gamma \omega)^2}} \)</span>
+- <span class="arithmatex">\( \delta = \tan^{-1} \left( \frac{\gamma \omega}{\omega_0^2 - \omega^2} \right) \)</span></p>
+<hr/>
+<h3 id="resonance-condition"><strong>Resonance Condition</strong></h3>
+<p>Maximum amplitude (resonance) occurs near:</p>
+<div class="arithmatex">\[
+\omega_{\text{res}} = \sqrt{\omega_0^2 - \frac{\gamma^2}{2}}
+\]</div>
+<ul>
+<li>At resonance, energy absorption is maximized.</li>
+<li>Damping limits amplitude growth.</li>
+</ul>
+<hr/>
+<h2 id="2-analysis-of-dynamics"><strong>2. Analysis of Dynamics</strong></h2>
+<h3 id="parameter-effects"><strong>Parameter Effects:</strong></h3>
+<ul>
+<li><strong>Damping <span class="arithmatex">\( \gamma \)</span></strong>:</li>
+<li>High: Motion dies quickly, broad resonance.</li>
+<li>
+<p>Low: Sustained oscillations, sharp resonance.</p>
+</li>
+<li>
+<p><strong>Driving Amplitude <span class="arithmatex">\( A \)</span></strong>:</p>
+</li>
+<li>Low: Periodic motion.</li>
+<li>
+<p>High: Nonlinear effects dominate; possible chaos.</p>
+</li>
+<li>
+<p><strong>Driving Frequency <span class="arithmatex">\( \omega \)</span></strong>:</p>
+</li>
+<li>Near <span class="arithmatex">\( \omega_0 \)</span>: Resonance.</li>
+<li>Far from <span class="arithmatex">\( \omega_0 \)</span>: Reduced response.</li>
+</ul>
+<hr/>
+<h3 id="numerical-simulation-results"><strong>Numerical Simulation Results</strong></h3>
+<ul>
+<li>
+<p><strong>Parameters</strong>:<br/>
+<span class="arithmatex">\( \gamma = 0.2 \)</span>, <span class="arithmatex">\( \omega_0 = 1.5 \)</span>, <span class="arithmatex">\( A = 1.2 \)</span>, <span class="arithmatex">\( \omega = 0.666 \)</span></p>
+</li>
+<li>
+<p><strong>Initial Conditions</strong>:<br/>
+<span class="arithmatex">\( \theta(0) = 0.2 \)</span>, <span class="arithmatex">\( \dot{\theta}(0) = 0.0 \)</span></p>
+</li>
+</ul>
+<h4 id="time-series-plot"><strong>Time Series Plot</strong></h4>
+<ul>
+<li>Shows transient decay and steady-state periodic response.</li>
+</ul>
+<h4 id="phase-space-plot"><strong>Phase Space Plot</strong></h4>
+<ul>
+<li>Displays angular position vs. angular velocity.</li>
+<li>Structure hints at complexity (possibly quasi-periodic or chaotic depending on parameters).</li>
+</ul>
+<hr/>
+<h2 id="next-steps-optional-visualizations"><strong>Next Steps (Optional Visualizations)</strong></h2>
+<ul>
+<li>Generate <strong>Poincaré sections</strong> to identify chaotic regimes.</li>
+<li>Construct <strong>bifurcation diagrams</strong> by varying <span class="arithmatex">\( A \)</span> or <span class="arithmatex">\( \omega \)</span>.</li>
+<li>Calculate <strong>Lyapunov exponents</strong> to quantify chaos.</li>
+</ul>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
