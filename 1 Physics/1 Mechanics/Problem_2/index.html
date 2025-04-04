@@ -276,7 +276,50 @@
 <li>Generate <strong>Poincaré sections</strong> to identify chaotic regimes.</li>
 <li>Construct <strong>bifurcation diagrams</strong> by varying <span class="arithmatex">\( A \)</span> or <span class="arithmatex">\( \omega \)</span>.</li>
 <li>Calculate <strong>Lyapunov exponents</strong> to quantify chaos.</li>
+<li>import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp</li>
 </ul>
+<h1 id="parameters">Parameters</h1>
+<p>gamma = 0.2        # Damping coefficient
+omega_0 = 1.5      # Natural frequency (sqrt(g/L))
+A = 1.2            # Driving amplitude
+omega = 0.666      # Driving frequency</p>
+<h1 id="initial-conditions">Initial conditions</h1>
+<p>theta_0 = 0.2      # Initial angular displacement
+theta_dot_0 = 0.0  # Initial angular velocity</p>
+<h1 id="governing-equation-small-angle-approximation">Governing equation (Small-Angle Approximation)</h1>
+<p>def forced_damped_pendulum(t, y):
+    theta, theta_dot = y
+    dydt = [theta_dot, -gamma<em>theta_dot - omega_0</em>*2 * theta + A * np.cos(omega * t)]
+    return dydt</p>
+<h1 id="time-span-for-the-simulation">Time span for the simulation</h1>
+<p>t_span = (0, 100)
+t_eval = np.linspace(t_span[0], t_span[1], 1000)</p>
+<h1 id="solving-the-differential-equation">Solving the differential equation</h1>
+<p>solution = solve_ivp(forced_damped_pendulum, t_span, [theta_0, theta_dot_0], t_eval=t_eval)</p>
+<h1 id="extracting-the-results">Extracting the results</h1>
+<p>t = solution.t
+theta = solution.y[0]
+theta_dot = solution.y[1]</p>
+<h1 id="plotting-the-results">Plotting the results</h1>
+<p>plt.figure(figsize=(12, 6))</p>
+<h1 id="time-series-plot_1">Time Series Plot</h1>
+<p>plt.subplot(2, 1, 1)
+plt.plot(t, theta, label=r'<span class="arithmatex">\(\theta(t)\)</span>')
+plt.title('Time Series Plot')
+plt.xlabel('Time')
+plt.ylabel('Angular Displacement')
+plt.legend()</p>
+<h1 id="phase-space-plot_1">Phase Space Plot</h1>
+<p>plt.subplot(2, 1, 2)
+plt.plot(theta, theta_dot, label=r'<span class="arithmatex">\(\dot{\theta}(t)\)</span>')
+plt.title('Phase Space Plot')
+plt.xlabel('Angular Displacement')
+plt.ylabel('Angular Velocity')
+plt.legend()</p>
+<p>plt.tight_layout()
+plt.show()</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
