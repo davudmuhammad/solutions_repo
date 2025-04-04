@@ -93,3 +93,56 @@ Maximum amplitude (resonance) occurs near:
 - Generate **Poincaré sections** to identify chaotic regimes.
 - Construct **bifurcation diagrams** by varying \( A \) or \( \omega \).
 - Calculate **Lyapunov exponents** to quantify chaos.
+- import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+
+# Parameters
+gamma = 0.2        # Damping coefficient
+omega_0 = 1.5      # Natural frequency (sqrt(g/L))
+A = 1.2            # Driving amplitude
+omega = 0.666      # Driving frequency
+
+# Initial conditions
+theta_0 = 0.2      # Initial angular displacement
+theta_dot_0 = 0.0  # Initial angular velocity
+
+# Governing equation (Small-Angle Approximation)
+def forced_damped_pendulum(t, y):
+    theta, theta_dot = y
+    dydt = [theta_dot, -gamma*theta_dot - omega_0**2 * theta + A * np.cos(omega * t)]
+    return dydt
+
+# Time span for the simulation
+t_span = (0, 100)
+t_eval = np.linspace(t_span[0], t_span[1], 1000)
+
+# Solving the differential equation
+solution = solve_ivp(forced_damped_pendulum, t_span, [theta_0, theta_dot_0], t_eval=t_eval)
+
+# Extracting the results
+t = solution.t
+theta = solution.y[0]
+theta_dot = solution.y[1]
+
+# Plotting the results
+plt.figure(figsize=(12, 6))
+
+# Time Series Plot
+plt.subplot(2, 1, 1)
+plt.plot(t, theta, label=r'$\theta(t)$')
+plt.title('Time Series Plot')
+plt.xlabel('Time')
+plt.ylabel('Angular Displacement')
+plt.legend()
+
+# Phase Space Plot
+plt.subplot(2, 1, 2)
+plt.plot(theta, theta_dot, label=r'$\dot{\theta}(t)$')
+plt.title('Phase Space Plot')
+plt.xlabel('Angular Displacement')
+plt.ylabel('Angular Velocity')
+plt.legend()
+
+plt.tight_layout()
+plt.show()
